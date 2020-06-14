@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    			  android:layout_width="fill_parent"
+    			  android:layout_height="fill_parent">
+	<LinearLayout android:orientation="vertical"
+    			  android:layout_width="fill_parent"
+    			  android:layout_height="fill_parent">
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:text="About MTKDownload"
+			android:textSize="24sp" />
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:text="MTKDownload allows you to download GPS logs from certain GPS recorders (Transystem 747A+ and other MTK recorders) via Bluetooth.\n"
+			/>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:autoLink="all"
+			android:text="Email: Android@Dimitri_Junker.de\nPersonal Website: http://www.dimitri-junker.de\n"
+			/>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:text="How to use"
+			android:layout_marginBottom="10dp"
+			android:textSize="20sp" />
+		<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TableRow>
+				<TextView android:layout_column="1" android:text="1) "></TextView>
+				<TextView android:layout_column="2" android:layout_width="wrap_content"
+					android:text="Pair your GPS device in the Android bluetooth settings."></TextView>
+			</TableRow>
+			<TableRow>
+				<TextView android:layout_column="1" android:text="2) "></TextView>
+				<TextView android:layout_column="2" android:layout_width="wrap_content"
+					android:text="Go to the preferences of MTKDownload and select your GPS device."></TextView>
+			</TableRow>
+			<TableRow>
+				<TextView android:layout_column="1" android:text="3) "></TextView>
+				<TextView android:layout_column="2" android:layout_width="wrap_content"
+					android:text="Click the 'Download log' button in the main screen to download the log file to your internal storage."></TextView>
+			</TableRow>
+			<TableRow>
+				<TextView android:layout_column="1" android:text="4) "></TextView>
+				<TextView android:layout_column="2" android:layout_width="wrap_content"
+					android:text="Press the 'Del log' button to clear the GPS devices memory."></TextView>
+			</TableRow>
+			<TableRow>
+				<TextView android:layout_column="1" android:text="5) "></TextView>
+				<TextView android:layout_column="2" android:layout_width="wrap_content"
+					android:text="Download the log files to your computer and use BT747 to transform them to GPX, KML, etc."></TextView>
+			</TableRow>
+		</TableLayout>
+	</LinearLayout>
+</ScrollView>
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="listChunkSizeShow">
+ <item>65,536 bytes</item>
+ <item>4,096 bytes</item>
+ <item>2,048 bytes</item>
+ <item>1,024 bytes</item>
+ <item>512 bytes</item>
+ <item>256 bytes</item>
+</string-array>
+<string-array name="listChunkSizeReturn">
+ <item>65536</item>
+ <item>4096</item>
+ <item>2048</item>
+ <item>1024</item>
+ <item>512</item>
+ <item>256</item>
+</string-array>
+<string-array name="listMemSizeShow">
+ <item>Automatic</item>
+ <item>4 MiB</item>
+ <item>2 MiB</item>
+ <item>1 MiB</item>
+</string-array>
+<string-array name="listMemSizeReturn">
+ <item>0</item>
+ <item>4194304</item>
+ <item>2097152</item>
+ <item>1048576</item>
+</string-array>
+<string-array name="listOverwriteShow">
+ <item>Don\'t download</item>
+ <item>Download until first empty sector</item>
+ <item>Download full memory</item>
+</string-array>
+<string-array name="listOverwriteReturn">
+ <item>0</item>
+ <item>1</item>
+ <item>2</item>
+</string-array>
+</resources>
