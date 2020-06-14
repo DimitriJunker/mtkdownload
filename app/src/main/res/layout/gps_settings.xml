@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    			  android:layout_width="fill_parent"
+    			  android:layout_height="fill_parent">
+	<LinearLayout android:orientation="vertical"
+    			  android:layout_width="fill_parent"
+    			  android:layout_height="fill_parent">
+		<Button android:id="@+id/button_full_stop"
+					        android:layout_width="fill_parent"
+					        android:layout_height="wrap_content"
+					        android:text="When memory full => STOP recording"
+					        android:onClick="set_MemFull_STOP" />	
+		<Button android:id="@+id/button_full_overwrite"
+					        android:layout_width="fill_parent"
+					        android:layout_height="wrap_content"
+					        android:text="When memory full => OVERWRITE old logs"
+					        android:onClick="set_MemFull_OVERWRITE" />
+		<TextView android:id="@+id/settings_textview"
+					      	android:layout_width="fill_parent"
+					      	android:layout_height="wrap_content"
+					      	android:lines="100" />
+	</LinearLayout>
+</ScrollView>
+

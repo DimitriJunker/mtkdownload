@@ -1,0 +1,81 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .directory
+* .hgignore
+* .idea\
+* .idea\androidmtk.iml
+* .idea\codeStyles\
+* .idea\codeStyles\Project.xml
+* .idea\misc.xml
+* .idea\modules.xml
+* .idea\vcs.xml
+* .idea\workspace.xml
+* default.properties
+* icon-512.png
+* icon.xcf
+* logs\
+* logs\gpslog2019-09-07_002350.txt
+* logs\gpslog2019-09-07_002405.txt
+* logs\gpslog2019-09-07_002440.txt
+* logs\gpslog2019-09-07_010356.txt
+* logs\gpslog2019-09-07_011139.txt
+* logs\gpslog2019-09-07_012256.txt
+* logs\gpslog2019-09-07_012404.txt
+* logs\gpslog2019-09-07_012404_gpx.txt
+* logs\gpslog2019-09-07_111937.txt
+* logs\gpslog2019-09-07_115932.txt
+* logs\gpslog2019-09-08_104836.txt
+* logs\gpslog2019-09-08_111319.txt
+* logs\gpslog2019-09-09_013858.txt
+* logs\gpslog2019-09-10_021846.txt
+* logs\gpslog2019-09-11_103618.txt
+* logs\gpslog2019-09-11_103618_gpx.txt
+* logs\gpslog2019-09-13_002830.txt
+* logs\gpslog2019-09-18_101204.bin
+* logs\gpslog2019-09-18_101204.txt
+* logs\gpslog2019-09-18_101204_gpx.txt
+* logs\gpslog2019-09-18_113156.txt
+* logs\gpslog2019-09-18_124112.txt
+* logs\gpslog2019-09-19_014552.txt
+* screenshots\
+* screenshots\2011-01-29-main.png
+* screenshots\2011-01-29-preferences.png
+* screenshots\device-2014-02-26-080858.png
+* screenshots\device-2014-02-26-080942.png
+* screenshots\device-2014-03-26-115126.png
+* screenshots\device-2014-03-26-115141.png
+* screenshots\device-2014-03-26-115154.png
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* lint.xml => app\lint.xml
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+* src\com\androidmtk\.classpath => app\src\main\resources\com\androidmtk\.classpath
+* src\com\androidmtk\.project => app\src\main\resources\com\androidmtk\.project
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
