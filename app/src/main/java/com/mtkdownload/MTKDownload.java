@@ -2,6 +2,7 @@ package com.mtkdownload;
 
 import com.mtkdownload.R;
 
+import android.Manifest;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -14,6 +15,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -91,19 +94,21 @@ public class MTKDownload extends Activity
         //bar.setDisplayOptions(1, ActionBar.DISPLAY_SHOW_TITLE);
         
         bar.addTab(bar.newTab()
-                .setText("Download")
+                .setText(R.string.Download)
                 .setTabListener(new TabListener<DownloadFragment>(this, "download", DownloadFragment.class)));
         
         bar.addTab(bar.newTab()
-            .setText("Help")
+            .setText(R.string.Help)
             .setTabListener(new TabListener<HelpFragment>(this, "help", HelpFragment.class)));
         
         bar.addTab(bar.newTab()
-                .setText("GPS Settings")
+                .setText(R.string.GPS_Settings)
                 .setTabListener(new TabListener<GPSSettingsFragment>(this, "gps_settings", GPSSettingsFragment.class)));
     
         //createGPX("2014-04-25_093511");
-    }
+
+
+	}
     
     // **** Restarting Button code ****
     public void hotStart(View v) {
@@ -180,8 +185,8 @@ public class MTKDownload extends Activity
 
 		if (!isGPSSelected())
 			return;
-		
-    	dialog = ProgressDialog.show(this, "Deleting log from GPS receiver", "Please wait...", true, false);
+
+    	dialog = ProgressDialog.show(this, "@string/Del_log", "@string/wait", true, false);
     	
     	// Start a thread to do the deleting
 		DeleteRunnable deleteRunnable = new DeleteRunnable(ThreadHandler);
@@ -212,7 +217,7 @@ public class MTKDownload extends Activity
 
     	dialog = new ProgressDialog(this);
     	dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-    	dialog.setMessage("Downloading log from GPS receiver");
+    	dialog.setMessage(getString(R.string.Downloading));
     	dialog.setCancelable(false);
     	dialog.setOnCancelListener(new OnCancelListener() {
             public void onCancel(DialogInterface dialog) {
@@ -226,13 +231,57 @@ public class MTKDownload extends Activity
 
 
 		// Start a thread to get the log
-    	downloadBin = new DownloadBinRunnable(file_time_stamp, ThreadHandler);
-		Thread downloadThread = new Thread(downloadBin);
-		downloadThread.start();
+		//check permissions
+		int  sdkVers= Build.VERSION.SDK_INT;
+		boolean permOK=false;
+		if(sdkVers>22)
+		{
 
-		Log.d(TAG, "++++ Done: getLog()");
-    }
-    public void getPref(View v) {
+			if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)
+				permOK=true;
+			else
+			{
+				if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+					Toast.makeText(this, "Write External Starage Permision is needed to copy Logfile.",
+							Toast.LENGTH_SHORT).show();
+				}
+				requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 110);
+			}
+
+		}
+		else
+			permOK=true;
+		if(permOK){
+			downloadBin = new DownloadBinRunnable(file_time_stamp, ThreadHandler);
+			Thread downloadThread = new Thread(downloadBin);
+			downloadThread.start();
+
+			Log.d(TAG, "++++ Done: getLog()");
+
+			}
+
+	    }
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,String[] permissions,
+										   int[] grantResults){
+		if(requestCode==110){
+			if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+				downloadBin = new DownloadBinRunnable(file_time_stamp, ThreadHandler);
+				Thread downloadThread = new Thread(downloadBin);
+				downloadThread.start();
+
+				Log.d(TAG, "++++ Done: getLog()");
+
+			}
+		}
+		else {
+			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		}
+	}
+
+
+	public void getPref(View v) {
     	Log.v(TAG, "+++ getPref() +++");
 
 		// Get some preferences information
@@ -255,7 +304,7 @@ public class MTKDownload extends Activity
 		if (!isGPSSelected())
 			return;
 
-    	dialog = ProgressDialog.show(this, "Performing restart", "Please wait...", true , false);
+    	dialog = ProgressDialog.show(this, "@string/restart", "@string/wait", true , false);
 
     RestartRunnable restartRunnable = new RestartRunnable(ThreadHandler, mode);
 		Thread restartThread = new Thread(restartRunnable);
@@ -287,15 +336,15 @@ public class MTKDownload extends Activity
 				file_time_stamp = msg.getData().getString(RESTART_GPS);
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(MTKDownload.this);
-				builder.setTitle("Restart Logger");
-				builder.setMessage("Press Continue after swichtin Logger Off and on or abort");
-				builder.setPositiveButton("continue", new DialogInterface.OnClickListener() {
+				builder.setTitle("@string/Restart1");
+				builder.setMessage("@string/Restart2");
+				builder.setPositiveButton("@string/continue", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						getLog2();
 					}
 				});
-				builder.setNegativeButton("abort", null);
+				builder.setNegativeButton("@string/abort", null);
 				builder.setIcon(android.R.drawable.ic_dialog_alert);
 				builder.show();
 
@@ -353,7 +402,7 @@ public class MTKDownload extends Activity
 	private void createGPX(String file_time_stamp) {		
 		dialog = new ProgressDialog(MTKDownload.this);
 		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		dialog.setMessage("Converting GPS log to GPX file");
+		dialog.setMessage("@string/Convert");
 		dialog.setCancelable(false);
 		dialog.setMax(100);
 		dialog.show();

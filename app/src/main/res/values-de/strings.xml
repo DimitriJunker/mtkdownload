@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MTKDownload</string>
+    <string name="alert_chooseName">Wähle einen Verzeichnisnamen aus</string>
+    <string name="cancel">Abbruch</string>
+    <string name="default_directoryname">Unbenannt</string>
+    <string name="browse">Wähle Ordner</string>
+    <string name="delete_log_from_gps_receiver">Lösche Log vom GPS Empfänger</string>
+    <string name="download_log_from_gps_receiver">Lade Log vom GPS Empfänger runter</string>
+    <string name="exit">Ende</string>
+    <string name="ok">OK</string>
+    <string name="warm_start">Warmstart</string>
+    <string name="cold_start">Kaltstart</string>
+    <string name="hot_start">Hot-Start</string>
+    <string name="when_memory_full_stop_recording"><![CDATA[Bei vollem Speicher => Aufzeichnung STOPpen]]></string>
+    <string name="when_memory_full_overwrite_old_logs"><![CDATA[Bei vollem Speicher => Aufzeichnung überschreiben]]></string>
+    <string name="about_mtkdownload">Über MTKDownload</string>
+    <string name="how_to_use">Wie benutzen</string>
+    <string name="mtkdownload_allows_you_to_download_gps_logs_from_certain_gps_recorders_transystem_747a_and_other_mtk_recorders_via_bluetooth_n">"MTKDownload ermöglicht es GPS Logs von einigen GPS Rekordern (Transystem 747A+ und andere MTK Rekorder) per Bluetooth. zu kopieren "</string>
+    <string name="help1">Koppel Deinen GPS Rekorder in den Android Bluetooth Einstellungen</string>
+    <string name="help2">Gehe zu den Einstellungen von MTKDownload und wähle das GPS Gerät aus.</string>
+    <string name="help3">Drücke den \'Download Log\' Knopf auf dem Hauptschirm um das Log in den internen Speicher zu übertragen</string>
+    <string name="help4">Drücke den \'LOG Löschen\' Knopf um den Speicher des GPS Gerätes zu löschen</string>
+    <string name="help5">Kopiere das Log File und/oder (wenn in den Einstellungen aktiviert) das GPX-File auf den PC</string>
+    <string name="help6">Benutze BT747 zum Wandeln nach GPX, KML, usw.</string>
+    <string name="up">hoch</string>
+    <string name="select">auswählen</string>
+    <string name="current_folder_n_this_is_a_long_path_to_test_if_this_will_span_multiple_lines">Aktuelles Verzeichnis</string>
+    <string name="GPS_device">Gps Gerät</string>
+    <string name="preferences">Einstellungen</string>
+    <string name="Sel_GPS">Gps Gerät auswählen</string>
+    <string name="Create_GPX1">GPX File erzeugen</string>
+    <string name="Create_GPX2">GPX File nach Download erzeugen</string>
+    <string name="Create_deb">Debug File erzeugen</string>
+    <string name="trk1">Ein Track Sektion</string>
+    <string name="trk2">Nur ein TRK-Sektion per GPX-File</string>
+    <string name="Chunk1">Chunk Größe</string>
+    <string name="Chunk2">Größe der Chunks beim Download</string>
+    <string name="CMem2">GPS-Speicher Größe</string>
+    <string name="CMem1">Speicher Größe</string>
+    <string name="Over1">Überschreibmodus</string>
+    <string name="Over2">Auswählen wie bei GPS im Überschribmodus vorgegangen werden soll</string>
+    <string name="path1">Zielpfad</string>
+    <string name="path2">Wohin sollen die geladenen Daten gespeichert werden</string>
+    <string name="Main">Allgemein</string>
+    <string name="Del_log">Log im GPS Rekorder löschen</string>
+    <string name="wait">Bitte warten...</string>
+    <string name="Downloading">Log vom GPS Rekorder laden</string>
+    <string name="restart">Neustart ausführen</string>
+    <string name="Convert">Konvertiere GPS log zu GPX File</string>
+    <string name="Restart1">Logger neustarten</string>
+    <string name="Restart2">Drücke Weiter nach aus- und anschalten des Loggers oder Abbruch</string>
+    <string name="weiter">Weiter</string>
+    <string name="abort">Abbruch</string>
+    <string name="Download">Download</string>
+    <string name="Help">Hilfe</string>
+    <string name="GPS_Settings">GPS Einstellungen</string>
+</resources>

@@ -1,10 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">MTKDownload</string>
-	<string name="hello">AndroidFileBrowserExampleActivity</string>
+	<string name="hello" translatable="false">AndroidFileBrowserExampleActivity</string>
 	<string name="alert_chooseName">Choose a directory name</string>
 	<string name="ok">OK</string>
 	<string name="cancel">Cancel</string>
 	<string name="default_directoryname">Unnamed</string>
 	<string name="browse">Select Folder</string>
+	<string name="delete_log_from_gps_receiver">Delete log from GPS receiver</string>
+	<string name="download_log_from_gps_receiver">Download log from GPS receiver</string>
+	<string name="hot_start">Hot start</string>
+	<string name="warm_start">Warm start</string>
+	<string name="cold_start">Cold start</string>
+	<string name="exit">Exit</string>
+	<string name="when_memory_full_stop_recording"><![CDATA[When memory full => STOP recording]]></string>
+	<string name="when_memory_full_overwrite_old_logs"><![CDATA[When memory full => OVERWRITE old logs]]></string>
+	<string name="about_mtkdownload">About MTKDownload</string>
+	<string name="how_to_use">How to use</string>
+	<string name="email_android_dimitri_junker_de_npersonal_website_http_www_dimitri_junker_de_n" translatable="false">Email: Android@Dimitri_Junker.de\nPersonal Website: http://www.dimitri-junker.de\n</string>
+	<string name="mtkdownload_allows_you_to_download_gps_logs_from_certain_gps_recorders_transystem_747a_and_other_mtk_recorders_via_bluetooth_n">MTKDownload allows you to download GPS logs from certain GPS recorders (Transystem 747A+ and other MTK recorders) via Bluetooth.\n</string>
+	<string name="_1" translatable="false">1)</string>
+	<string name="help1">Pair your GPS device in the Android bluetooth settings.</string>
+	<string name="_2" translatable="false">2)</string>
+	<string name="help2">Go to the preferences of MTKDownload and select your GPS device.</string>
+	<string name="_3" translatable="false">3)</string>
+	<string name="help3">Click the \'Download log\' button in the main screen to download the log file to your internal storage.</string>
+	<string name="_4" translatable="false">4)</string>
+	<string name="help4">Press the \'Del log\' button to clear the GPS devices memory.</string>
+	<string name="_5" translatable="false">5)</string>
+	<string name="help5">Download the log files and/or (if activated in the prefferences) the gpx file to your computer.</string>
+	<string name="_6" translatable="false">6)</string>
+	<string name="help6">Use BT747 to transform them to GPX, KML, etc.</string>
+	<string name="up">Up</string>
+	<string name="select">Select</string>
+	<string name="current_folder_n_this_is_a_long_path_to_test_if_this_will_span_multiple_lines">Current folder: \n/THis/is/a/long/path/to/test/if/this/will/span/multiple/lines</string>
+	<string name="preferences">Preferences</string>
+    <string name="GPS_device">GPS device</string>
+	<string name="Sel_GPS">Select your GPS device</string>
+	<string name="Create_GPX1">Create GPX file</string>
+	<string name="Create_GPX2">Create GPX file after download</string>
+	<string name="Create_deb">Create debug file</string>
+	<string name="trk1">Write one trk section</string>
+	<string name="trk2">Write only one trk section in the gpx file</string>
+	<string name="Chunk1">Chunk size</string>
+	<string name="Chunk2">Size of chunk to download</string>
+	<string name="CMem2">Size of GPS memory</string>
+	<string name="CMem1">Memory size</string>
+	<string name="Over1">Overwrite mode</string>
+	<string name="Over2">Choose what happens for GPS in OVERWRITE mode</string>
+	<string name="path1">Save Path</string>
+	<string name="path2">The location the exported data is saved to</string>
+	<string name="Main">Main</string>
+	<string name="Del_log">Deleting log from GPS receiver</string>
+	<string name="wait">Please wait...</string>
+	<string name="Downloading">Downloading log from GPS receiver</string>
+	<string name="restart">Performing restart</string>
+	<string name="Convert">Converting GPS log to GPX file</string>
+	<string name="Restart1">Restart Logger</string>
+	<string name="Restart2">Press Continue after swichtin Logger Off and on or abort</string>
+	<string name="weiter">continue</string>
+	<string name="abort">abort</string>
+	<string name="Download">Download</string>
+	<string name="Help">Help</string>
+	<string name="GPS_Settings">GPS Settings</string>
 </resources>

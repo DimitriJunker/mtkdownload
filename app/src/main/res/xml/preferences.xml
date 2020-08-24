@@ -1,58 +1,58 @@
 <PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:key="preferencescreen">
-    <PreferenceCategory android:title="Main">
-    	<ListPreference
-        	android:title="GPS device"
-            android:summary="Select your GPS device"
-            android:key="bluetoothListPref"
-            android:defaultValue=""
-            />
-        <CheckBoxPreference
-        	android:title="Create GPX file"
-        	android:summary="Create GPX file after download"
-        	android:defaultValue="true"
-            android:key="createGPXPref"
-            />
-        <CheckBoxPreference
-        	android:title="Create debug file"
-        	android:summary="Create debug file"
-        	android:defaultValue="false"
-            android:key="createDebugPref"
-            />
-        <CheckBoxPreference
-        	android:title="Write one trk section"
-        	android:summary="Write only one trk section in the gpx file"
-        	android:defaultValue="true"
-            android:key="createOneTrkPref"
-            />
-    	<ListPreference
-        	android:title="Chunk size"
-            android:summary="Size of chunk to download"
-            android:key="chunkSizePref"
-            android:defaultValue="4096"
-            android:entries="@array/listChunkSizeShow"
-  			android:entryValues="@array/listChunkSizeReturn"
-            />
-    	<ListPreference
-        	android:title="Memory size"
-            android:summary="Size of GPS memory"
-            android:key="memSizePref"
-            android:defaultValue="0"
-            android:entries="@array/listMemSizeShow"
-  			android:entryValues="@array/listMemSizeReturn"
-            />
-    	<ListPreference
-        	android:title="Overwrite mode"
-            android:summary="Choose what happens for GPS in OVERWRITE mode"
-            android:key="overwritePref"
-            android:defaultValue="0"
-            android:entries="@array/listOverwriteShow"
-  			android:entryValues="@array/listOverwriteReturn"
-            />
-    	<Preference
-            android:key="path"
-            android:summary="The location the exported data is saved to"
-            android:title="Save Path" />
-    </PreferenceCategory>
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:key="preferencescreen">
+	<PreferenceCategory android:title="@string/Main">
+		<ListPreference
+			android:title="@string/GPS_device"
+			android:summary="@string/Sel_GPS"
+			android:key="bluetoothListPref"
+			android:defaultValue=""
+			/>
+		<CheckBoxPreference
+			android:title="@string/Create_GPX1"
+			android:summary="@string/Create_GPX2"
+			android:defaultValue="true"
+			android:key="createGPXPref"
+			/>
+		<CheckBoxPreference
+			android:title="@string/Create_deb"
+			android:summary="@string/Create_deb"
+			android:defaultValue="false"
+			android:key="createDebugPref"
+			/>
+		<CheckBoxPreference
+			android:title="@string/trk1"
+			android:summary="@string/trk2"
+			android:defaultValue="true"
+			android:key="createOneTrkPref"
+			/>
+		<ListPreference
+			android:title="@string/Chunk1"
+			android:summary="@string/Chunk2"
+			android:key="chunkSizePref"
+			android:defaultValue="4096"
+			android:entries="@array/listChunkSizeShow"
+			android:entryValues="@array/listChunkSizeReturn"
+			/>
+		<ListPreference
+			android:title="@string/CMem1"
+			android:summary="@string/CMem2"
+			android:key="memSizePref"
+			android:defaultValue="0"
+			android:entries="@array/listMemSizeShow"
+			android:entryValues="@array/listMemSizeReturn"
+			/>
+		<ListPreference
+			android:title="@string/Over1"
+			android:summary="@string/Over2"
+			android:key="overwritePref"
+			android:defaultValue="0"
+			android:entries="@array/listOverwriteShow"
+			android:entryValues="@array/listOverwriteReturn"
+			/>
+		<Preference
+			android:key="path"
+			android:summary="@string/path2"
+			android:title="@string/path1" />
+	</PreferenceCategory>
 </PreferenceScreen> 

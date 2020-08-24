@@ -4,51 +4,74 @@
     			  android:layout_height="fill_parent">
 	<LinearLayout android:orientation="vertical"
     			  android:layout_width="fill_parent"
-    			  android:layout_height="fill_parent">
+    			  android:layout_height="wrap_content">
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
-			android:text="About MTKDownload"
+			android:text="@string/about_mtkdownload"
 			android:textSize="24sp" />
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
-			android:text="MTKDownload allows you to download GPS logs from certain GPS recorders (Transystem 747A+ and other MTK recorders) via Bluetooth.\n"
+			android:text="@string/mtkdownload_allows_you_to_download_gps_logs_from_certain_gps_recorders_transystem_747a_and_other_mtk_recorders_via_bluetooth_n"
 			/>
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
 			android:autoLink="all"
-			android:text="Email: Android@Dimitri_Junker.de\nPersonal Website: http://www.dimitri-junker.de\n"
+			android:text="@string/email_android_dimitri_junker_de_npersonal_website_http_www_dimitri_junker_de_n"
 			/>
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
-			android:text="How to use"
+			android:text="@string/how_to_use"
 			android:layout_marginBottom="10dp"
 			android:textSize="20sp" />
-		<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		<TableLayout
 			android:layout_width="wrap_content" android:layout_height="wrap_content">
 			<TableRow>
-				<TextView android:layout_column="1" android:text="1) "></TextView>
+				<TextView android:layout_column="1" android:text="@string/_1"></TextView>
 				<TextView android:layout_column="2" android:layout_width="wrap_content"
-					android:text="Pair your GPS device in the Android bluetooth settings."></TextView>
+					android:text="@string/help1"></TextView>
 			</TableRow>
 			<TableRow>
-				<TextView android:layout_column="1" android:text="2) "></TextView>
+				<TextView android:layout_column="1" android:text="@string/_2"></TextView>
 				<TextView android:layout_column="2" android:layout_width="wrap_content"
-					android:text="Go to the preferences of MTKDownload and select your GPS device."></TextView>
+					android:text="@string/help2"></TextView>
 			</TableRow>
 			<TableRow>
-				<TextView android:layout_column="1" android:text="3) "></TextView>
+				<TextView android:layout_column="1" android:text="@string/_3"></TextView>
 				<TextView android:layout_column="2" android:layout_width="wrap_content"
-					android:text="Click the 'Download log' button in the main screen to download the log file to your internal storage."></TextView>
+					android:text="@string/help3"></TextView>
 			</TableRow>
 			<TableRow>
-				<TextView android:layout_column="1" android:text="4) "></TextView>
+				<TextView android:layout_column="1" android:text="@string/_4"></TextView>
 				<TextView android:layout_column="2" android:layout_width="wrap_content"
-					android:text="Press the 'Del log' button to clear the GPS devices memory."></TextView>
+					android:text="@string/help4"></TextView>
 			</TableRow>
 			<TableRow>
-				<TextView android:layout_column="1" android:text="5) "></TextView>
-				<TextView android:layout_column="2" android:layout_width="wrap_content"
-					android:text="Download the log files to your computer and use BT747 to transform them to GPX, KML, etc."></TextView>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:layout_column="1"
+					android:text="@string/_5"></TextView>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:layout_column="2"
+					android:text="@string/help5"></TextView>
+			</TableRow>
+			<TableRow>
+
+				<TextView
+					android:layout_width="19dp"
+					android:layout_height="match_parent"
+					android:layout_column="1"
+					android:text="@string/_6"></TextView>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:layout_column="2"
+					android:text="@string/help6"></TextView>
 			</TableRow>
 		</TableLayout>
 	</LinearLayout>
