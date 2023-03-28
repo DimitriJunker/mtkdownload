@@ -63,4 +63,8 @@
 	<string name="Download">Download</string>
 	<string name="Help">Help</string>
 	<string name="GPS_Settings">GPS Settings</string>
+	<string name="Delete_log_Q">Delete log from GPS receiver?</string>
+	<string name="Are_you_sure">Are you sure?</string>
+	<string name="Yes">Yes</string>
+	<string name="No">No!</string>
 </resources>

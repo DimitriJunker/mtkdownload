@@ -55,4 +55,8 @@
     <string name="Download">Download</string>
     <string name="Help">Hilfe</string>
     <string name="GPS_Settings">GPS Einstellungen</string>
+    <string name="Delete_log_Q">Log im GPS Rekorder löschen?</string>
+    <string name="Are_you_sure">Sind Sie sicher?</string>
+    <string name="Yes">Ja</string>
+    <string name="No">Nein!</string>
 </resources>

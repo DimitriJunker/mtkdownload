@@ -1,7 +1,5 @@
 package com.mtkdownload;
 
-import com.mtkdownload.R;
-
 import android.Manifest;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -66,8 +64,8 @@ public class MTKDownload extends Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v(TAG, "+++ ON CREATE +++");
-        
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+    	sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		// Clear all preferences. FOR TESTING!
         //SharedPreferences.Editor editor = sharedPreferences.edit();
         //editor.clear();
@@ -124,7 +122,7 @@ public class MTKDownload extends Activity
     }
     
     public void set_MemFull_STOP(View v) {
-    	Log.v(TAG, "+++ set_MemFull_STOP() +++");
+		Log.v(TAG, "+++ set_MemFull_STOP() +++");
 
 		if (!isGPSSelected())
 			return;
@@ -186,8 +184,8 @@ public class MTKDownload extends Activity
 		if (!isGPSSelected())
 			return;
 
-    	dialog = ProgressDialog.show(this, "@string/Del_log", "@string/wait", true, false);
-    	
+		dialog = ProgressDialog.show(this, getString(R.string.Del_log), getString(R.string.wait), true, false);
+
     	// Start a thread to do the deleting
 		DeleteRunnable deleteRunnable = new DeleteRunnable(ThreadHandler);
 		Thread restartThread = new Thread(deleteRunnable);
@@ -304,7 +302,7 @@ public class MTKDownload extends Activity
 		if (!isGPSSelected())
 			return;
 
-    	dialog = ProgressDialog.show(this, "@string/restart", "@string/wait", true , false);
+    	dialog = ProgressDialog.show(this, getString(R.string.restart), getString(R.string.wait), true , false);
 
     RestartRunnable restartRunnable = new RestartRunnable(ThreadHandler, mode);
 		Thread restartThread = new Thread(restartRunnable);
@@ -336,15 +334,15 @@ public class MTKDownload extends Activity
 				file_time_stamp = msg.getData().getString(RESTART_GPS);
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(MTKDownload.this);
-				builder.setTitle("@string/Restart1");
-				builder.setMessage("@string/Restart2");
-				builder.setPositiveButton("@string/continue", new DialogInterface.OnClickListener() {
+				builder.setTitle(getString(R.string.Restart1));
+				builder.setMessage(getString(R.string.Restart2));
+				builder.setPositiveButton(getString(R.string.weiter), new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						getLog2();
 					}
 				});
-				builder.setNegativeButton("@string/abort", null);
+				builder.setNegativeButton(getString(R.string.abort), null);
 				builder.setIcon(android.R.drawable.ic_dialog_alert);
 				builder.show();
 
@@ -402,7 +400,7 @@ public class MTKDownload extends Activity
 	private void createGPX(String file_time_stamp) {		
 		dialog = new ProgressDialog(MTKDownload.this);
 		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		dialog.setMessage("@string/Convert");
+		dialog.setMessage(getString(R.string.Convert));
 		dialog.setCancelable(false);
 		dialog.setMax(100);
 		dialog.show();

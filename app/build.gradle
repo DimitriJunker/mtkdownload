@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.mtkdownload"
-        minSdkVersion 13
-        targetSdkVersion 29
+        minSdkVersion 28
+        targetSdkVersion 33
     }
 
     buildTypes {

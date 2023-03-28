@@ -1,4 +1,6 @@
 package com.mtkdownload;
+
+import com.mtkdownload.R;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -25,9 +27,9 @@ public class DownloadFragment extends Fragment {
                 // Perform action on click
             	new AlertDialog.Builder(getActivity())
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Delete log from GPS receiver?")
-                .setMessage("Are you sure?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setTitle(getString(R.string.Delete_log_Q))
+                .setMessage(getString(R.string.Are_you_sure))
+                .setPositiveButton(getString(R.string.Yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     	MTKDownload act = (MTKDownload)getActivity();
@@ -35,7 +37,7 @@ public class DownloadFragment extends Fragment {
                     }
 
                 })
-                .setNegativeButton("No!", null)
+                .setNegativeButton(getString(R.string.No), null)
                 .show();
             }
         });
