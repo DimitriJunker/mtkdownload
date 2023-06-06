@@ -1,7 +1,5 @@
 package com.mtkdownload;
 
-import java.util.Set;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -12,28 +10,30 @@ import android.os.Environment;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.File;
+import java.util.Set;
+
+
 public class PrefsFragment extends PreferenceFragment {
 	private final String LOGTAG = "PrefsFragment";
-	private BluetoothAdapter mBluetoothAdapter = null;
 	private String PathName = "";
-    
+
 	private final int REQUEST_CODE_PICK_DIR = 1;
-	
+
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences);
-        
+
         // Populate the listPreference with all the bluetooth devices
         ListPreference customPref = (ListPreference) findPreference("bluetoothListPref");
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         // If there are paired devices
         if (pairedDevices.size() > 0) {
@@ -54,8 +54,9 @@ public class PrefsFragment extends PreferenceFragment {
         else {
         	customPref.setEnabled(false);
         }
-        
-        PathName = MTKDownload.getSharedPreferences().getString("Path", Environment.getExternalStorageDirectory().toString() );
+
+		PathName = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)) + File.separator + "mtkDL"+ File.separator;
+        //  PathName = MTKDownload.getSharedPreferences().getString("Path", Environment.getExternalStorageDirectory().toString() );
         Preference pathPref = findPreference("path");
         pathPref.setSummary(PathName);
 	}
@@ -65,12 +66,16 @@ public class PrefsFragment extends PreferenceFragment {
 		
 		if (preference.getKey().compareTo("path") == 0) {
 		     // Start the file chooser here
+
+			Toast.makeText(getActivity(), R.string.NoBrowser , Toast.LENGTH_LONG).show();
+			/*
 			final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 			Log.d(LOGTAG, "Start browsing button pressed");
 			Intent fileExploreIntent = new Intent(FileBrowserActivity.INTENT_ACTION_SELECT_DIR, null, getActivity(), FileBrowserActivity.class);
 			fileExploreIntent.putExtra( FileBrowserActivity.startDirectoryParameter, sharedPreferences.getString("Path", Environment.getExternalStorageDirectory().toString() ) );
 			startActivityForResult(fileExploreIntent, REQUEST_CODE_PICK_DIR);
 			return true;
+			 */
 		}
 		return false;
 	}
@@ -82,7 +87,7 @@ public class PrefsFragment extends PreferenceFragment {
 		if (requestCode == REQUEST_CODE_PICK_DIR) {
 			if (resultCode == Activity.RESULT_OK) {
 				String newDir = data.getStringExtra(FileBrowserActivity.returnDirectoryParameter);
-				Toast.makeText(getActivity(), "New Export Path:\n" + newDir, Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), R.string.New_Export_Path + newDir, Toast.LENGTH_LONG).show();
 				SharedPreferences sharedPreferences = MTKDownload.getSharedPreferences();
 				SharedPreferences.Editor editor = sharedPreferences.edit();
 				editor.putString("Path", newDir);
@@ -90,7 +95,7 @@ public class PrefsFragment extends PreferenceFragment {
 		        Preference pathPref = findPreference("path");
 		        pathPref.setSummary(newDir);
 			} else {
-				Toast.makeText(getActivity(), "No Changes Made", Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), R.string.No_Changes_Made, Toast.LENGTH_LONG).show();
 			}
 		}
 

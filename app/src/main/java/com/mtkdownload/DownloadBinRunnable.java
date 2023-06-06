@@ -1,28 +1,16 @@
 package com.mtkdownload;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.format.Time;
-import android.util.AndroidException;
-import android.util.Log;
-import android.widget.Toast;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DownloadBinRunnable implements Runnable {
 	volatile boolean running = true;
@@ -42,19 +30,24 @@ public class DownloadBinRunnable implements Runnable {
     
 	// Output date
 	private final String file_time_stamp;
+	private BufferedWriter bwLog;
+	private BufferedOutputStream bosBin;
+	private long binLen;
 
 	// Preferences
 	private boolean create_log_file = false;
 	private boolean createGPX = true;
 	private int SIZEOF_CHUNK = 0x0800;
     private int SIZEOF_GPS_MEMORY = 0;
-	private int OVERWRITE_MODE = 0;	
-    private String PathName = "";
+	private int OVERWRITE_MODE = 0;
     private static String GPS_bluetooth_id;
 
-	public DownloadBinRunnable(String file_time_stamp, Handler downLoadDialogHandler) {
+	public DownloadBinRunnable(String file_time_stamp, BufferedWriter bwLog, BufferedOutputStream bosBin,long binLen, Handler downLoadDialogHandler) {
 		this.dHandler = downLoadDialogHandler;
 		this.file_time_stamp = file_time_stamp;
+		this.bwLog = bwLog;
+		this.bosBin = bosBin;
+		this.binLen = binLen;
 
 		// Get some preferences information
 		create_log_file = MTKDownload.getSharedPreferences().getBoolean("createDebugPref", false);
@@ -62,7 +55,6 @@ public class DownloadBinRunnable implements Runnable {
 		SIZEOF_CHUNK = Integer.parseInt(MTKDownload.getSharedPreferences().getString("chunkSizePref", "4096"));
     	SIZEOF_GPS_MEMORY = Integer.parseInt(MTKDownload.getSharedPreferences().getString("memSizePref", "0"));
     	OVERWRITE_MODE = Integer.parseInt(MTKDownload.getSharedPreferences().getString("overwritePref", "0"));
-    	PathName = MTKDownload.getSharedPreferences().getString("Path", Environment.getExternalStorageDirectory().toString() );
     	GPS_bluetooth_id = MTKDownload.getSharedPreferences().getString("bluetoothListPref", "-1");
 	}
 
@@ -150,8 +142,6 @@ public class DownloadBinRunnable implements Runnable {
     		log_file.delete();
     	}
     }
-
-
 	public void run() {
 		String reply = null;
 		Pattern p;
@@ -160,16 +150,10 @@ public class DownloadBinRunnable implements Runnable {
         sendMessageToMessageField("Getting log from GPS");
 		sendPercentageComplete(0);
 		// Open log file
-		if (create_log_file) {
-			log_file = new File(PathName, "gpslog" + file_time_stamp + ".txt");
-			try {
-				log_writer = new BufferedWriter(new FileWriter(log_file));
-			} catch (IOException e) {
-				e.printStackTrace();
-				log_writer = null;
-			}
-		}
 
+		if (create_log_file) {
+			log_writer= bwLog;
+		}
 		Log(String.format("Trying to connect to GPS device: %s", GPS_bluetooth_id));
     	gpsdev = new GPSrxtx(MTKDownload.getmBluetoothAdapter(), GPS_bluetooth_id);
     	if (gpsdev.connect()) {
@@ -292,22 +276,16 @@ public class DownloadBinRunnable implements Runnable {
             Log(String.format("Need to read %d (0x%08X) bytes of log data from device...", bytes_to_read, bytes_to_read));
 
         	// Open an output stream for writing
-			//DYJ: if the file already exists errorWhileDownloading_cont was called and the download should be continues
-
-        	bin_file = new File(PathName, "gpslog"+file_time_stamp+".bin");
-			int offset = (int) bin_file.length();
-			boolean append =bin_file.exists();
-
-			try {
-				bin_output_stream = new BufferedOutputStream(new FileOutputStream(bin_file,append), SIZEOF_SECTOR);
-
-			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
+			//DYJ: if the file already exists errorWhileDownloading_cont was called and the download should be continued
+			int offset;
+			if(bosBin!=null) {
+				bin_output_stream = bosBin;
+				offset = (int) binLen;
+			}
+			else{
 				errorWhileDownloading();
 				return;
 			}
-
-
             // To be safe we iterate requesting SIZEOF_CHUNK bytes at time.
             while (running && offset < bytes_to_read) {
                 // Request log data (PMTK_LOG_REQ_DATA) from offset to bytes_to_read.
@@ -634,7 +612,7 @@ public class DownloadBinRunnable implements Runnable {
 			}
 		} else {
 			Log("Bluetooth connection problems");
-			sendTOAST("Bluetooth connection problem. The GPS device might be inactive.");
+			sendTOAST(R.string.GPSinactive);
 			createGPX = false;
 		}
 		sendPercentageConverted(99);
@@ -688,4 +666,5 @@ public class DownloadBinRunnable implements Runnable {
 		msg.setData(b);
 		dHandler.sendMessage(msg);
 	}
+
 }

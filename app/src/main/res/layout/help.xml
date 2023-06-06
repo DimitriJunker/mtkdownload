@@ -46,32 +46,25 @@
 					android:text="@string/help4"></TextView>
 			</TableRow>
 			<TableRow>
-
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:layout_column="1"
-					android:text="@string/_5"></TextView>
-
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:layout_column="2"
+				<TextView android:layout_column="1" android:text="5)"></TextView>
+				<TextView android:layout_column="2" android:layout_width="wrap_content"
 					android:text="@string/help5"></TextView>
 			</TableRow>
 			<TableRow>
-
-				<TextView
-					android:layout_width="19dp"
-					android:layout_height="match_parent"
-					android:layout_column="1"
-					android:text="@string/_6"></TextView>
-
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:layout_column="2"
+				<TextView android:layout_column="1" android:text="6)"></TextView>
+				<TextView android:layout_column="2" android:layout_width="wrap_content"
 					android:text="@string/help6"></TextView>
+			</TableRow>
+			<TableRow>
+				<TextView android:layout_column="1" android:text="7)"></TextView>
+				<TextView android:layout_column="2" android:layout_width="wrap_content"
+					android:text="@string/help7"></TextView>
+			</TableRow>
+			<TableRow>
+				<TextView android:layout_column="1" android:text="8)"></TextView>
+				<TextView android:layout_column="2" android:layout_width="wrap_content"
+					android:autoLink="all"
+					android:text="@string/help8"></TextView>
 			</TableRow>
 		</TableLayout>
 	</LinearLayout>

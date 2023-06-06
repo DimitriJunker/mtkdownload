@@ -9,16 +9,22 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
@@ -26,6 +32,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.Objects;
+
 
 public class MTKDownload extends Activity
 {
@@ -36,6 +55,10 @@ public class MTKDownload extends Activity
     private static BluetoothAdapter mBluetoothAdapter = null;
     private static SharedPreferences sharedPreferences;
 
+	private BufferedWriter log_writer;
+	BufferedOutputStream bosBin;
+	long lenBin;
+	private static final int SIZEOF_SECTOR = 0x10000;
 	// Bluetooth device string
     private ProgressDialog dialog;
     
@@ -63,7 +86,8 @@ public class MTKDownload extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v(TAG, "+++ ON CREATE +++");
+
+		Log.v(TAG, "+++ ON CREATE +++");
 
     	sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		// Clear all preferences. FOR TESTING!
@@ -75,7 +99,7 @@ public class MTKDownload extends Activity
     	mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
             // Device does not support Bluetooth
-        	Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
+        	Toast.makeText(this, R.string.Bluetooth_na, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -86,8 +110,37 @@ public class MTKDownload extends Activity
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
         Log.i(TAG, "+++ GPS bluetooth device: "+sharedPreferences.getString("bluetoothListPref","-1"));
-        
-        final ActionBar bar = getActionBar();
+
+		//Check Blootooth Permission
+
+		//check permissions
+		int  sdkVers= Build.VERSION.SDK_INT;
+		boolean permOK=false;
+		if(sdkVers>32)
+		{
+
+			if(checkSelfPermission(Manifest.permission.BLUETOOTH_CONNECT)== PackageManager.PERMISSION_GRANTED)
+				permOK=true;
+			else
+			{
+				if (shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_CONNECT)) {
+					Toast.makeText(this, R.string.perm_con,
+							Toast.LENGTH_SHORT).show();
+				}
+				requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 110);
+			}
+
+		}
+		else
+			permOK=true;
+		if(!permOK){
+			finish();
+		}
+
+
+
+
+		final ActionBar bar = getActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         //bar.setDisplayOptions(1, ActionBar.DISPLAY_SHOW_TITLE);
         
@@ -124,17 +177,16 @@ public class MTKDownload extends Activity
     public void set_MemFull_STOP(View v) {
 		Log.v(TAG, "+++ set_MemFull_STOP() +++");
 
-		if (!isGPSSelected())
-			return;
-		
-    	dialog = ProgressDialog.show(this, "Changing GPS settings", "Please wait...", true, false);
-    	
-    	// Start a thread to do the deleting
-    	ChangeGPSSettingsRunable runnable = new ChangeGPSSettingsRunable(ThreadHandler, "PMTK182,1,6,2", "PMTK001,182,1,");
-		Thread thread = new Thread(runnable);
-		thread.start();
+		if (isGPSSelected()) {
+			dialog = ProgressDialog.show(this, "Changing GPS settings", "Please wait...", true, false);
 
-    	Log.d(TAG, "++++ Done: set_MemFull_STOP()");
+			// Start a thread to do the deleting
+			ChangeGPSSettingsRunable runnable = new ChangeGPSSettingsRunable(ThreadHandler, "PMTK182,1,6,2", "PMTK001,182,1,");
+			Thread thread = new Thread(runnable);
+			thread.start();
+
+			Log.d(TAG, "++++ Done: set_MemFull_STOP()");
+		}
     }
     
     public void set_MemFull_OVERWRITE(View v) {
@@ -177,8 +229,161 @@ public class MTKDownload extends Activity
 		}
 		return super.onOptionsItemSelected(item);
 	}
-    
-    public void delLog() {
+
+	private   BufferedWriter getBufWr(String subDir, String file, String mime_type){
+		return getBufWr(subDir,file,mime_type,false,0);
+
+	}
+	private   BufferedWriter getBufWr(String subDir, String file, String mime_type,boolean append,int sz){
+
+		OutputStream fos;
+		BufferedWriter bw=null;
+
+		try{
+
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+
+				ContentResolver resolver =  getApplicationContext().getContentResolver();
+				ContentValues contentValues =  new ContentValues();
+				contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, file);
+				contentValues.put(MediaStore.MediaColumns.MIME_TYPE, mime_type);
+				contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + subDir);
+				Uri fileUri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues);
+
+				if(fileUri!=null){
+					String mode;
+					if (append)
+						mode="wa";
+					else
+						mode="w";
+
+					fos = resolver.openOutputStream(Objects.requireNonNull(fileUri),mode);
+					Writer writer = new OutputStreamWriter(fos, "US-ASCII");
+					if(sz==0)
+						bw = new BufferedWriter(writer);
+					else
+						bw = new BufferedWriter(writer,sz);
+
+				}
+			}
+			else{
+				String dirN =String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)) + File.separator + subDir;
+				File new_file = new File(dirN, file);
+				if(sz==0)
+					bw = new BufferedWriter(new FileWriter(new_file,append));
+				else
+					bw = new BufferedWriter(new FileWriter(new_file,append),sz);
+			}
+		}catch(IOException e){
+			Toast.makeText(this, R.string.File_not_saved + e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+		return bw;
+
+	}
+
+	private boolean createSubdirectory(String subDirectoryName) {
+		boolean ok=false;
+		int  sdkVers= Build.VERSION.SDK_INT;
+		if(sdkVers>22 && sdkVers<29)
+		{
+			if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)
+				ok=true;
+			else
+			{
+				if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+					Toast.makeText(this, R.string.Write_Ext_Perm,
+							Toast.LENGTH_SHORT).show();
+				}
+				requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 110);
+			}
+		}
+		else
+			ok=true;
+		if(ok) {
+			File downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+			File subDirectory = new File(downloadsDirectory, subDirectoryName);
+			if (!subDirectory.exists()) {
+				ok = subDirectory.mkdirs();
+			}
+		}
+		return ok;
+	}
+
+	private BufferedOutputStream getBufOS(String subDir, String file, String mime_type,boolean append){
+
+		BufferedOutputStream bOs=null;
+
+		try{
+
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+
+				ContentResolver resolver =  getApplicationContext().getContentResolver();
+				ContentValues contentValues =  new ContentValues();
+				contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, file);
+				contentValues.put(MediaStore.MediaColumns.MIME_TYPE, mime_type);
+				contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + subDir);
+				Uri fileUri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues);
+				if(fileUri!=null){
+					String mode;
+					if (append)
+						mode="wa";
+					else
+						mode="w";
+					OutputStream oS=resolver.openOutputStream(fileUri,mode);
+					bOs=new BufferedOutputStream(oS);
+				}
+			}
+			else{
+				String dirN =String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)) + File.separator + subDir;
+				File new_file = new File(dirN, file);
+				try {
+					bOs = new BufferedOutputStream(new FileOutputStream(new_file, append), SIZEOF_SECTOR);
+
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+
+		}catch(IOException e){
+
+			Toast.makeText(this, R.string.File_not_saved + e.toString(), Toast.LENGTH_SHORT).show();
+		}
+
+
+		return bOs;
+
+	}
+	private long getFLen(String subDir, String fileN){
+
+		long length=0l;
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+			Uri contentUri = MediaStore.Files.getContentUri("external");
+			String[] projection = {MediaStore.Files.FileColumns.SIZE};
+			String selection = MediaStore.Files.FileColumns.DISPLAY_NAME + "=? AND " +
+					MediaStore.Files.FileColumns.RELATIVE_PATH + " LIKE ?";
+			String[] selectionArgs = {fileN, "%/"+subDir+"/%"};
+			Cursor cursor = getApplicationContext().getContentResolver().query(contentUri, projection, selection, selectionArgs, null);
+			if (cursor != null &&  cursor.moveToFirst()) {
+				int sizeColumnIndex = cursor.getColumnIndex(MediaStore.Downloads.SIZE);
+				length = cursor.getLong(sizeColumnIndex);
+				cursor.close();
+			}
+		}
+		else {
+			String dirN = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)) + File.separator + subDir;
+			File DirF = new File(dirN);
+			File file = new File(DirF, fileN);
+			if (file.exists())
+				length = file.length();
+		}
+
+
+		return length;
+
+
+}
+	public void delLog() {
     	Log.v(TAG, "+++ delLog() +++");
 
 		if (!isGPSSelected())
@@ -225,47 +430,31 @@ public class MTKDownload extends Activity
     	dialog.setMax(100);
     	dialog.show();
 
+// Start a thread to get the log
+		if(createSubdirectory("mtkDL")) {
+			if (getSharedPreferences().getBoolean("createDebugPref", false)) {
+				log_writer = getBufWr("mtkDL", "gpslog" + file_time_stamp + ".txt", "text/plain");
+			} else
+				log_writer = null;
+			lenBin = getFLen("mtkDL", "gpslog" + file_time_stamp + ".bin");
+			bosBin = getBufOS("mtkDL", "gpslog" + file_time_stamp + ".bin", "application/x-binary", lenBin > 0);
+			if (bosBin != null) {
+				downloadBin = new DownloadBinRunnable(file_time_stamp, log_writer, bosBin, lenBin, ThreadHandler);
+				Thread downloadThread = new Thread(downloadBin);
+				downloadThread.start();
 
-
-
-		// Start a thread to get the log
-		//check permissions
-		int  sdkVers= Build.VERSION.SDK_INT;
-		boolean permOK=false;
-		if(sdkVers>22)
-		{
-
-			if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)
-				permOK=true;
-			else
-			{
-				if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-					Toast.makeText(this, "Write External Starage Permision is needed to copy Logfile.",
-							Toast.LENGTH_SHORT).show();
-				}
-				requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 110);
-			}
-
+				Log.d(TAG, "++++ Done: getLog()");
+			} else
+				Log.d(TAG, "++++ can't write to file for getLog()");
 		}
-		else
-			permOK=true;
-		if(permOK){
-			downloadBin = new DownloadBinRunnable(file_time_stamp, ThreadHandler);
-			Thread downloadThread = new Thread(downloadBin);
-			downloadThread.start();
-
-			Log.d(TAG, "++++ Done: getLog()");
-
-			}
-
-	    }
+	}
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode,String[] permissions,
 										   int[] grantResults){
 		if(requestCode==110){
 			if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
-				downloadBin = new DownloadBinRunnable(file_time_stamp, ThreadHandler);
+				downloadBin = new DownloadBinRunnable(file_time_stamp,log_writer,bosBin,lenBin, ThreadHandler);
 				Thread downloadThread = new Thread(downloadBin);
 				downloadThread.start();
 
@@ -352,8 +541,12 @@ public class MTKDownload extends Activity
         		dialog.setProgress(msg.getData().getInt(KEY_PROGRESS));
 			}
     		if (msg.getData().containsKey(CREATEGPX)) {
-    			createGPX(msg.getData().getString(CREATEGPX));
-    		}
+				try {
+					createGPX(msg.getData().getString(CREATEGPX));
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
 			if (msg.getData().containsKey(KEY_TOAST)) {
 				String message = msg.getData().getString(KEY_TOAST);
 				Toast.makeText(MTKDownload.this, message, Toast.LENGTH_LONG).show();
@@ -397,7 +590,7 @@ public class MTKDownload extends Activity
 		return true;
 	}
 
-	private void createGPX(String file_time_stamp) {		
+	private void createGPX(String file_time_stamp) throws IOException {
 		dialog = new ProgressDialog(MTKDownload.this);
 		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		dialog.setMessage(getString(R.string.Convert));
@@ -406,9 +599,21 @@ public class MTKDownload extends Activity
 		dialog.show();
 		
 		// Start a new thread for it!
-		ParseBinFile parseBinFile = new ParseBinFile(file_time_stamp, ThreadHandler);
-		Thread gpxThread = new Thread(parseBinFile);
-		gpxThread.start();
+
+		BufferedWriter loggpx_writer,gpx_writer;
+		if(getSharedPreferences().getBoolean("createDebugPref", false))		{
+			loggpx_writer=getBufWr("mtkDL","gpslog" + file_time_stamp + "_gpx.txt","text/plain",true,SIZEOF_SECTOR);
+		}
+		else
+			loggpx_writer=null;
+		gpx_writer=getBufWr("mtkDL","gpslog" + file_time_stamp + ".gpx","application/gpx+xml",false,SIZEOF_SECTOR);
+		if(gpx_writer!=null) {
+			ParseBinFile parseBinFile = new ParseBinFile(file_time_stamp, loggpx_writer, gpx_writer, ThreadHandler);
+			Thread gpxThread = new Thread(parseBinFile);
+			gpxThread.start();
+		}else
+			gpx_writer.close();
+
 	}
 	
 	@Override

@@ -254,7 +254,7 @@ public class FileBrowserActivity extends Activity {
 								updateCurrentDirectoryTextView();
 								Log.d(LOGTAG, path.getAbsolutePath());
 							} else {//if(sel.canRead()) {
-								showToast("Path does not exist or cannot be read");
+								showToast(getString(R.string.Path_does_not_exist));
 							}//} else {//if(sel.canRead()) {
 						}//if (sel.isDirectory()) {
 						// Checks if 'up' was clicked

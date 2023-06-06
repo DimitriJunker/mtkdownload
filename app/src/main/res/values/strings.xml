@@ -24,13 +24,15 @@
 	<string name="_2" translatable="false">2)</string>
 	<string name="help2">Go to the preferences of MTKDownload and select your GPS device.</string>
 	<string name="_3" translatable="false">3)</string>
-	<string name="help3">Click the \'Download log\' button in the main screen to download the log file to your internal storage.</string>
+	<string name="help3">Choose if a GPX file should be created</string>
+	<string name="help4">Click the \'Download log\' button in the main screen to download the log file to your internal storage.</string>
+	<string name="help5">Press the \'Del log\' button to clear the GPS devices memory.</string>
+	<string name="help6">Download the log files and/or (if activated in the prefferences) the gpx file to your computer.</string>
+	<string name="help7">Use BT747 to transform the result into other formats</string>
+	<string name="help8">More info .see: http://www.dimitri-junker.de/eng/html/mtkdownload.html</string>
 	<string name="_4" translatable="false">4)</string>
-	<string name="help4">Press the \'Del log\' button to clear the GPS devices memory.</string>
 	<string name="_5" translatable="false">5)</string>
-	<string name="help5">Download the log files and/or (if activated in the prefferences) the gpx file to your computer.</string>
 	<string name="_6" translatable="false">6)</string>
-	<string name="help6">Use BT747 to transform them to GPX, KML, etc.</string>
 	<string name="up">Up</string>
 	<string name="select">Select</string>
 	<string name="current_folder_n_this_is_a_long_path_to_test_if_this_will_span_multiple_lines">Current folder: \n/THis/is/a/long/path/to/test/if/this/will/span/multiple/lines</string>
@@ -67,4 +69,16 @@
 	<string name="Are_you_sure">Are you sure?</string>
 	<string name="Yes">Yes</string>
 	<string name="No">No!</string>
+	<string name="perm_con">Permission for \'nearby devices\' necessary</string>
+	<string name="GPSinactive">Bluetooth connection problem. The GPS device might be inactive.</string>
+	<string name="New_Export_Path">New Export Path:\\n</string>
+	<string name="No_Changes_Made">No Changes Made</string>
+	<string name="Path_does_not_exist">Path does not exist or cannot be read</string>
+	<string name="Bluetooth_na">Bluetooth is not available</string>
+	<string name="Write_Ext_Perm">Write External Starage Permision is needed to copy Logfile.</string>
+    <string name="NoBrowser">At this version the directory is fixed sorry</string>
+    <string name="File_not_saved">File not saved \\n</string>
+	<string name="Sector_Track">Sector %d of %d | Track %d | %s</string>
+	<string name="No_dir">Can\'t create directory</string>
+
 </resources>

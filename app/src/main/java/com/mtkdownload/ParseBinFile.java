@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -71,19 +70,19 @@ public class ParseBinFile  implements Runnable {
 
 	private String oldToastmessage = "";
 	private int oldPercentage = 0;
-
-	private String PathName = "";
+	private BufferedWriter bwGpxLog,bwGpx;
 	private boolean create_log_file;
 	
 	private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-	public ParseBinFile(String file_time_stamp, Handler convertHandler) {
+	public ParseBinFile(String file_time_stamp, BufferedWriter bw_gpxlog, BufferedWriter bw_gpx, Handler convertHandler) {
 		this.convertHandler = convertHandler;
 		this.file_time_stamp = file_time_stamp;
+		this.bwGpxLog=bw_gpxlog;
+		this.bwGpx=bw_gpx;
 
 		write_one_trk = MTKDownload.getSharedPreferences().getBoolean("createOneTrkPref", true);
 		create_log_file = MTKDownload.getSharedPreferences().getBoolean("createDebugPref", false);
-    	PathName = MTKDownload.getSharedPreferences().getString("Path", Environment.getExternalStorageDirectory().toString() );
 
 		for (int i = 0; i < 0x10; i++) {
 			emptyseparator[i] = (byte) 0xFF;
@@ -95,16 +94,12 @@ public class ParseBinFile  implements Runnable {
 	public void doConvert() throws IOException {
 		// Open log file
 		if (create_log_file) {
-			log_file = new File(PathName, "gpslog" + file_time_stamp + "_gpx.txt");
-			try {
-				log_writer = new BufferedWriter(new FileWriter(log_file, true), SIZEOF_SECTOR);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			log_writer= bwGpxLog;
 		}
-
 		// Open an input stream for reading from the binary log
-		File bin_file = new File(PathName, "gpslog" + file_time_stamp + ".bin");
+		String pathName =String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)) + File.separator + "mtkDL";
+
+		File bin_file = new File(pathName, "gpslog" + file_time_stamp + ".bin");
 		BufferedInputStream reader;
 		try {
 			FileInputStream freader = new FileInputStream(bin_file);
@@ -116,21 +111,14 @@ public class ParseBinFile  implements Runnable {
 		}
 
 		// Open an output for writing the gpx file
-		File gpx_file = new File(PathName, "gpslog" + file_time_stamp + ".gpx");
-		Log("Creating GPX file: "+gpx_file.toString());
-		sendMessageToMessageField("Creating GPX file: "+gpx_file.toString());
-		BufferedWriter gpx_writer = null;
-		try {
-			FileWriter fwriter = null;
-			fwriter = new FileWriter(gpx_file);
-			gpx_writer = new BufferedWriter(fwriter, SIZEOF_SECTOR);
-			WriteHeader(gpx_writer);
-		} catch (IOException e) {
-			e.printStackTrace();
+		Log("Creating GPX file: "+ file_time_stamp + ".gpx");
+		sendMessageToMessageField("Creating GPX file: "+ file_time_stamp + ".gpx");
+		BufferedWriter gpx_writer = bwGpx;
+		if(bwGpx==null){
 			reader.close();
 			return;
 		}
-
+		WriteHeader(gpx_writer);
 		int bytes_in_sector = 0;
 		int sector_count = 0;
 		int log_count_fullywrittensector=-1;
