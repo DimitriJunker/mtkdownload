@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/mtkdownload.iml" filepath="$PROJECT_DIR$/mtkdownload.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/mtkdownload.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/mtkdownload.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/mtkdownload.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/mtkdownload.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/mtkdownload.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/mtkdownload.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/mtkdownload.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/mtkdownload.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MTKDownload.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MTKDownload.app.main.iml" />
     </modules>
   </component>
 </project>

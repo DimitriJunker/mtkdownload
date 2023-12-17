@@ -1,47 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.mtkdownload"
-      android:versionCode="105"
-      android:versionName="1.05">
-    <!-- <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true"> -->
-    <uses-sdk android:targetSdkVersion="29"/>
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" 
-        android:maxSdkVersion="30"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" 
-        android:maxSdkVersion="30"/>
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28"/>
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:requestLegacyExternalStorage="true">
-        <activity android:name=".MTKDownload"
-                  android:screenOrientation="portrait"
-         		  android:configChanges="orientation|keyboardHidden" 
-                  android:label="@string/app_name"
-            android:exported="true">
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MTKDownload2"
+        tools:targetApi="31">
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GpsSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HelpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PreferenceActivity"
+            android:exported="false"
+            android:label="@string/title_activity_preference" />
+        <activity
+            android:name=".MTKDownload"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MTKDownload2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-		<activity android:name=".MyPreferenceActivity"
-        		  android:label="Preferences">
-		</activity>
-		<activity android:name=".FileBrowserActivity"
-            	  android:label="File browser" 
-            	  android:configChanges="orientation|keyboardHidden"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="androidfilebrowser.SELECT_DIRECTORY_ACTION"></action>
             </intent-filter>
         </activity>
     </application>
 
-</manifest> 
+</manifest>
