@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GpsSettingsActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/button_full_stop"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="set_MemFull_STOP"
+            android:text="@string/when_memory_full_stop_recording" />
+
+        <Button
+            android:id="@+id/button_full_overwrite"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="set_MemFull_OVERWRITE"
+            android:text="@string/when_memory_full_overwrite_old_logs" />
+
+        <TextView
+            android:id="@+id/settings_textview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:lines="100" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,48 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>MTKDownload</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="Generator" content="NetObjects Fusion 8 für Windows">
+<base target="_parent">
+<link rel=stylesheet type="text/css" href="../html/style.css">
+<link rel=stylesheet type="text/css" href="../html/site.css">
+<style>
+</style>
+</head>
+<body NOF="(MB=(ZeroMargins, 90, 0, 166, 368), L=(MTKDownloadLayout, 100%, 1320))" topmargin=2 leftmargin=2 marginwidth=2 marginheight=2>
+ <table border=0 cellspacing=0 cellpadding=0 width=100% nof=ly>
+  <tr valign=top align=left>
+   <td width=120 height=15><img src="../assets/images/autogen/clearpixel.gif" width=120 height=1 border=0 alt=""></td>
+   <td></td>
+   <td width=152><img src="../assets/images/autogen/clearpixel.gif" width=152 height=1 border=0 alt=""></td>
+  </tr>
+  <tr valign=top align=left>
+   <td colspan=3 height=11></td>
+  </tr>
+  <tr valign=top align=left>
+   <td colspan=3 class="TextObject">
+    <p style="text-align: center;">&nbsp;</p>
+   </td>
+  </tr>
+  <tr valign=top align=left>
+   <td colspan=3 width=100% class="TextObject">
+    <h1>MTKDownload (ehemals AndroidMTK)</h1>
+    <h3><a name="MTKZweck"></a>Zweck der App</h3>
+    <p style="text-align: justify;">Die App dient dazu ein auf einem GPS-Logger (mit MTK-Chipsatz) gespeichertes Log per Bluetooth auf ein Android Gerät zu laden. <br>Es gibt zahlreiche GPS-Logger mit dem MTK-Chipsatz. Die mir bekannten arbeiten alle nach diesem Schema: das Log wird im internem Speicher aufgezeichnet, um es weiter zu benutzen und auch um den Speicher wieder frei zu bekommen muss man es also irgendwie runterladen. Erwartet hätte ich, dass man den Logger per USB an einen Computer o.ä. anschließt und er sich wie ein USB Stick verhält. Leider kann das keines der mir bekannten Geräte. Per USB funktioniert es nur mit spezieller Software, und diese existiert nicht für Android, hat man also z.B. im Urlaub nur ein Android Gerät zur Verfügung bleibt nur der zweite Weg, per Bluetooth. Dieser wird aber nicht von den Herstellern unterstützt, die Bluetoothschnittstelle dient eigentlich nur dazu den Logger als GPS-Maus zu verwenden. Aber es ist möglich und mindestens drei APPs bieten diese Möglichkeit an. Diese App, wie auch zwei andere ähnliche überträgt zuerst ein Binary-File und wandelt dieses dann in einem zweiten Schritt in ein GPX-File.<br>&nbsp;</p>
+    <h3 style="text-align: justify;"><a name="MTKAkt"></a>Aktueller Stand</h3>
+    <p style="text-align: justify;">Der ursprüngliche Programmierer, <a href="https://www.bastiaannaber.com/" target="ganz">Bastiaan Naber</a>, hat die Weiterentwicklung aufgegeben, der letzte Auslöser war, dass Google die App aus dem Play Store entfernt hatte. Dies geschah nicht wegen inhaltlicher Mängel oder Ähnlichem, sondern aufgrund neuer Richtlinien, wonach eine App den Begriff &quot;Android&quot; nicht mehr im Namen enthalten darf. Deshalb habe ich die App bei der Übernahme, mit Bastiaans Einverständnis, umbenannt. Die App steht natürlich weiterhin unter der GPL. Ausgangspunkt für meine Version war Bastiaans <a href="https://storage.googleapis.com/google-code-archive-source/v2/code.google.com/androidmtk/source-archive.zip" target="ganz">Version 0.25</a> seine Version 0.26 unterschied sich soweit mir bekannt nur durch die Lösung des GPS-Week-Rollover Problems. Aber dafür hatten wir ja beide eine ziemlich ähnliche Lösung. Schon mit meinem alten Logger, einem i-Blue 747A+ Bluetooth GPS Trip Recorder aber noch stärker mit meinem neuen Qstarz GPS Datenlogger BT-Q1000XT gab es immer wieder Abbrüche des Downloads per Bluetooth. Teilweise brauchte ich mehrere Neustarts und war über eine Stunde mit dem Download eines Tages beschäftigt. Inzwischen habe ich eine Lösung gefunden, die zumindest auf meiner Konstellationen (Samsung Galaxy S 8 / Samsung Tab A7 Lite / Samsung Galaxy S23 mit dem Qstarz) funktioniert. Inzwischen ist die App im Play Store verfügbar. Außerdem habe ich den Quellcode auf <a href="https://github.com/DimitriJunker/mtkdownload" target="ganz">Github</a> gesetzt und würde mich über Kommentare / Verbesserungsvorschläge freuen. Ausserdem bin ich in Kontakt mit dem Programmierer von <a href="https://play.google.com/store/apps/details?id=com.adtdev.mtkutility&hl=gsw">MTKUtility</a>.</p>
+    <p style="text-align: justify;">Die Version 2 habe ich zumindest was die Oberfläche angeht vollkommen neu programmiert. Der Grund waren die Unmengen an Warnungen, dass bestimmte Funktionen veraltet wären. Außerdem war das eine gute Übung für mich die Androidprogrammierung zu üben. Die Funktionen zum Übertragen der Daten u.ä. habe ich nur von Java nach Kotlin wandeln lassen. Da sollte also kein neuer Fehler entstanden sein&nbsp;  </p>
+    <h3 style="text-align: justify;">Bedienung</h3>
+    <p style="text-align: justify;">1) Koppel Deinen GPS Rekorder in den Android Bluetooth Einstellungen<br>2) Gehe zu den Einstellungen von MTKDownload und wähle das GPS Gerät aus.<br>3) Wähle aus ob auch ein GPX File erzeugt werden soll. und setze ggf. andere Einstellungen<br>4) Drücke den 'Lade Log...' Knopf auf dem Hauptschirm um das Log in den internen Speicher zu übertragen<br>5) Drücke den 'Lösche LOG...' Knopf um den Speicher des GPS Gerätes zu löschen<br>6) Kopiere das Log File und/oder (wenn in den Einstellungen aktiviert) das GPX-File auf den PC<br>7) Benutze BT747, GPS Babel o.ä. zum Wandeln in andere Formate<br>8) Außerdem kann über den Hauptschirm ein Neustart des Loggers ausgeführt werden, und über \'GPS Einstellungen\' bestimmt werden wie sich der Logger bei vollem Speicher verhalten soll </p>
+    <p style="text-align: justify;">Je nach Android Version können Aufforderungen kommen bestimmte Berechtigungen zu aktivieren. ggf. muss die entsprechende Funktion danach neu gestartet werden. Dies ist aber nur bei der ersten Verwendung nötig.</p>
+    <p style="text-align: justify;">Bei den oben beschriebenen Abbrüchen der  Übertragung gibt es mehrere Varianten, einige erkennt die App und reagiert automatisch durch einen Neustart der Verbindung. Wenn sich der Logger aber aufhängt kann sie dagegen nichts machen. Wenn sich also länger nichts mehr tut, einfach kurz den Logger ausschalten und wieder einschalten, danach sollte es dann weiter gehen. </p>
+    <p style="text-align: justify;">Die neuen Android Versionen führen immer neue Sicherheitsfunktionen ein, ob sinnvoll oder nicht muss jeder selber entscheiden. Für die Programmierer macht es das Leben nicht einfacher, vor allem wenn sie sich noch in Android einarbeiten wie ich. Aktuell das Hauptproblem ist, dass man nicht mehr einfach überall hin Files speichern kann. In der Version 1.05 habe ich eine Lösung gefunden um die Files in den Unterordner mtkDL im Downloadverzeichnis zu speichern. Dies habe ich unter Android 9 und 13 getestet. Das benutzte Verfahren lässt sich sicher noch verbessern und es sollte auch wieder möglich sein das Verzeichnis in den Einstellungen zu verändern. Da die Version 1.04 aber unter neuen Android Versionen gar nicht funktioniert und ich derzeit wenig Zeit habe war es mir erstmal wichtiger eine Version zu erstellen die überhaupt funktioniert. So kann ich dann eine optimalere Version in Ruhe angehen.</p>
+    <p style="text-align: justify;">&nbsp;</p>
+    <h1 style="text-align: center;">&nbsp;</h1></td>
+  </tr>
+ </table>
+</body>
+</html>
+ 

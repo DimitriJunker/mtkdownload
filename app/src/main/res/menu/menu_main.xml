@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mtkdownload.MTKDownload2">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_GPSsettings"
+        android:orderInCategory="100"
+        android:title="@string/menu_GPS"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_Help"
+        android:orderInCategory="100"
+        android:title="@string/action_Help"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_CR"
+        android:orderInCategory="100"
+        android:title="@string/action_CR"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_End"
+        android:onClick="close"
+        android:orderInCategory="100"
+        android:title="@string/menu_ende"
+        app:showAsAction="never" />
+
+
+</menu>

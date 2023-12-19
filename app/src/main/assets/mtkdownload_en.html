@@ -1,0 +1,42 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>MTKDownload</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="Generator" content="NetObjects Fusion 8 für Windows">
+<base target="_parent">
+<link rel=stylesheet type="text/css" href="../html/style.css">
+<link rel=stylesheet type="text/css" href="../html/site.css">
+<style>
+</style>
+</head>
+<body NOF="(MB=(ZeroMargins, 77, 0, 166, 219), L=(MTKDownloadLayout, 688, 1445))" topmargin=2 leftmargin=2 marginwidth=2 marginheight=2>
+ <table border=0 cellspacing=0 cellpadding=0 width=100% nof=ly>
+  <tr valign=top align=left>
+   <td width=20 height=15><img src="../assets/images/autogen/clearpixel.gif" width=20 height=1 border=0 alt=""></td>
+   <td></td>
+   <td width=92><img src="../assets/images/autogen/clearpixel.gif" width=92 height=1 border=0 alt=""></td>
+  </tr>
+  <tr valign=top align=left>
+   <td colspan=3 height=39></td>
+  </tr>
+  <tr valign=top align=left>
+   <td colspan=3 width=100% class="TextObject">
+    <h1>MTKDownload (formerly AndroidMTK)</h1>
+    <h2><br>Purpose of the app</h2>
+    <p><br>The app is used to load a log from a GPS logger (with MTK chip set) via Bluetooth onto an Android device.<br>There are numerous GPS loggers with the MTK chip set. The ones I am familiar with operate under a similar framework: the log is recorded in internal memory, and to free up space and access the log, it needs to be downloaded. I would have expected that the logger could be connected to a computer or similar via USB&nbsp; and  behaves like a USB stick. Unfortunately none of the devices I know can do that. The download by USB only works with special software, which is not available for Android., so if for example if you have only one Android device available on vacation, only the second way, via Bluetooth is possible. However, this is not supported by the manufacturers, the Bluetooth interface actually only serves to use the logger as a GPS mouse. But it is possible and at least three APPs offer this possibility. This app, like two other similar ones, first transfers a binary file and then converts it to a GPX file in a second step.</p>
+    <h2>Current status</h2>
+    <p>The original programmer, <a href="https://www.bastiaannaber.com/">Bastiaan Naber</a>,has discontinued further development of the app.The final catalyst was the app's removal from the Play Store by Google. This action was not due to any content-related issues or deficiencies, but rather because new regulations prohibit the use of<br>&nbsp;&quot;Android&quot; in an app's name. Consequently, with Bastiaan's consent, I renamed the app to MTKDownload upon taking over its development. The app is of course still under the GPL. My version is based on Bastiaan's <a href="https://storage.googleapis.com/google-code-archive-source/v2/code.google.com/androidmtk/source-archive.zip">version 0.25,</a> as far as I know version 0.26 differed only by the solution of the GPS-Week-Rollover problem. But we both had a pretty similar solution for that. Even with my old logger, an i-Blue 747A + Bluetooth GPS Trip Recorder, but even more with my new Qstarz GPS data logger BT-Q1000XT, the download via Bluetooth was repeatedly interrupted. At times, multiple restarts were required, and the process of downloading an entire day's worth of logs took over an hour. In the meantime I have found a solution that works at least on my constellation (Samsung Galaxy S 8 / Samsung Tab A7 Lite / Samsung Galaxy S23 with the Qstarz). The App is now available at Play Store. Additionally, I have uploaded the source code to <a href="https://github.com/DimitriJunker/mtkdownload">Github</a> and would be happy to receive comments / suggestions for improvement. I am also in contact with the programmer at <a href="https://play.google.com/store/apps/details?id=com.adtdev.mtkutility&hl=gsw">MTKUtility</a>. </p>
+    <p>I completely reprogrammed version 2, at least as far as the user interface is concerned. The reason was the tons of warnings that certain functions were deprecated. It was also a good exercise for me to practice Android programming. The functions for transferring data etc. I just converted from Java to Kotlin. So there shouldn't be any new errors</p>
+    <h2>Operation:</h2>
+    <p>1) Pair your GPS recorder in the Bluetooth settings of your Android device.<br>2) Go to the settings of MTKDownload and select the GPS device.<br>3) Choose whether to generate a GPX file and adjust other settings if necessary.<br>4) Press the “Load log...” button on the main screen to transfer the log to internal storage.<br>5) Press the “Del log...”&nbsp; button to erase the storage of the GPS device.<br>6) Download the log files and/or (if activated in the prefferences) the gpx file to your computer..<br>7) Use <a href="https://www.bt747.org/">BT747</a>, <a href="https://www.gpsbabel.org/">GPS Babel,</a> or similar tools to convert the files to other formats.<br>8) You can also restart the logger from the main screen and use \'GPS Settings\' to determine how the logger should behave when the memory is full<br><br>Depending on the Android version, you may receive prompts to enable specific permissions. If so, the corresponding function may need to be restarted. However, this is only necessary during the initial usage. </p>
+    <p>In the case of interrupted transfers mentioned earlier, often the app automatically detects the interruptions and solves it by restarting the connection. However, if the logger freezes, the app cannot take any action. In such cases, if nothing happens for an extended period, simply turn off and then turn on the logger, after which the process should resume. </p>
+    <p>With each new Android version, new security features are introduced, and their usefulness varies, requiring individual judgment. These constant changes make life more challenging for developers, especially those still learning Android, like myself. Currently, the main problem is the limited ability to save files anywhere. In version 1.05, I found a solution to store the files in the &quot;mtkDL&quot; subfolder within the download directory. I have tested this on Android 9 and 13. The approach used can certainly be improved, and it should be possible to change the directory in the settings again. However, given that version 1.04 does not work at all on newer Android versions and my current lack of time, my priority was to create a version that works at least. This way, I can focus on developing a more optimized version later.<br>&nbsp;</p>
+    <p>&nbsp;</p>
+   </td>
+  </tr>
+ </table>
+</body>
+</html>
+ 
